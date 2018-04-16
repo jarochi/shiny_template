@@ -9,7 +9,7 @@ shinyUI(fluidPage(
   headerPanel("Nagłówek"),
   sidebarLayout(
     sidebarPanel(
-      p("Lewy panel boczny"),
+      p("Lewy panel boczny")      ,
       selectInput(inputId = "wybranySerial",
                   label = "Wybierz serial do analizy",
                   choices = nazwySeriali,
@@ -21,9 +21,10 @@ shinyUI(fluidPage(
     mainPanel(
       br(),                 # równa poziom napisu
       p("Panel główny"),
-      uiOutput("przykład"),
-      plotOutput("trend"),
-      verbatimTextOutput("model")
+      uiOutput("przykład")
+      # ,
+      # plotOutput("trend"),
+      # verbatimTextOutput("model")
     )
   )
 ))

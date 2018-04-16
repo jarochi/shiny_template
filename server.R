@@ -2,7 +2,6 @@ library(PogromcyDanych)
 library(ggplot2)
 library(dplyr)
 
-przykład <- data.frame(serialeIMDB$serial)
 
 shinyServer(function(input, output){
   
@@ -22,18 +21,7 @@ shinyServer(function(input, output){
     summary(lm(ocena~id, serial))
     
   })
-  
-  output$Super_wykres <- renderPlot({
-    wybranySerial <- input$wybranySerial
-    serial <- filter(serialeIMDB, serial == wybranySerial)
-    pl <- ggplot(serial, aes(id, ocena, size=glosow, color=sezon)) +
-      geom_point() + xlab("Numer odcinka")
-    if(input$liniaTrendu)
-      pl <- pl + geom_smooth(se=FALSE, method="lm", size=3)
-    pl
-  })
-  
-  
+
   raw_input <- reactive({
     
     if (!is.null(input[["input_z_danymi"]]))
@@ -58,9 +46,9 @@ shinyServer(function(input, output){
       tabsetPanel(
         tabPanel(title = "Data input",
                  fluidRow(
-                   column(width = 5, 
-                          fileInput('input_z_danymi', "Submit amplification data (.rdml, .csv or .xls file):")
-                   ),
+                   # column(width = 5, 
+                   #        fileInput('input_z_danymi', "Submit amplification data (.rdml, .csv or .xls file):")
+                   # ),
                    column(width = 5,
                           p("Test application with the example amplification data"),
                           actionButton("use_example", "Load example")
@@ -72,7 +60,9 @@ shinyServer(function(input, output){
     } else {
       tabsetPanel(
         tabPanel(title = "Super_wynik",
-                 plotOutput("Super_wykres"))
+                 plotOutput("trend")),
+        tabPanel(title = "tak",
+                 verbatimTextOutput("model"))
       )
     }
   })
